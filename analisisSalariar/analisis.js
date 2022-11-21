@@ -1,6 +1,4 @@
 //analisis personal
-meanPorPerson("Juanita");
-screeningPerPerson("Juanita");
 function  findPerson(personInSearch){
 return salarios.find((persona) =>persona.name == personInSearch);
 }
@@ -28,3 +26,19 @@ return salarios.find((persona) =>persona.name == personInSearch);
     const newSalary = increase + lastSalary ;
     console.log(newSalary);
 }
+
+//analisis por empresas
+
+const business={};
+for (person of salarios) {
+  for (job of person.trabajos) {
+    if(!business[job.empresa]){
+        business[job.empresa] = {};
+    }
+    if(!business[job.empresa][job.year]){
+        business[job.empresa][job.year]= [];
+    }
+    business[job.empresa][job.year].push(job.salario)
+  }   
+}
+console.log(business)
