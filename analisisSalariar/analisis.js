@@ -2,13 +2,13 @@
 function  findPerson(personInSearch){
 return salarios.find((persona) =>persona.name == personInSearch);
 }
- function meanPorPerson(personInSearch){
+ function meanPerPerson(personInSearch){
     const jobs = findPerson(personInSearch).trabajos;
     const wage = jobs.map(function(element){
         return element.salario;
     });
     const meanWages = SantiagoMath.calculateMean(wage);
-    console.log(meanWages);
+    return meanWages;
  } 
  function screeningPerPerson(personInSearch){
     const jobs = findPerson(personInSearch).trabajos;
@@ -76,4 +76,24 @@ function screeningPerBusiness(name){
         const newMeanSalary = increase + lastMeanSalary ;
         console.log(newMeanSalary);
     }
+}
+
+//analisis general 
+function meanGeneral(){
+    const meanPerson = salarios.map(person => meanPerPerson(person.name));
+    const mean = SantiagoMath.calculateMean(meanPerson);
+    return mean;
+}
+
+function meanTop10(){
+    const meanPerson = salarios.map(person => meanPerPerson(person.name));
+    const sortList = meanPerson.sort((accumulator, courrentValue) => accumulator - courrentValue);
+    
+    const top = meanPerson.length/10
+    const limit =meanPerson.length - top;
+    console.log(sortList);
+    
+    const top10= sortList.slice(limit, sortList.length)
+
+    console.log(top10);
 }
