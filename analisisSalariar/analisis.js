@@ -42,3 +42,38 @@ for (person of salarios) {
   }   
 }
 console.log(business)
+
+function meanBusineesYear(name, year){
+    if(!business[name]){
+        console.warn('La empresa no existe');
+    }else if(!business[name][year]){
+        console.warn('La empres no dio salarios ese year');   
+    }else{
+        return SantiagoMath.calculateMean(business[name][year]);
+    }
+}
+
+function screeningPerBusiness(name){
+    
+    if(!business[name]){
+        console.warn('La empresa no existe');
+    }else{
+        const businessYears = Object.keys(business[name])
+        const listMeanYears = businessYears.map((year)=>{
+            return meanBusineesYear(name, year)
+        });
+        let salaryGrothPercentage = [];
+        for (let i = 1;  i < listMeanYears.length; i++) {
+            const currentSalary = listMeanYears[i];
+            const previusSalary = listMeanYears[i-1];
+            const growth = currentSalary - previusSalary;
+            const growthPerventage = growth /previusSalary;
+            salaryGrothPercentage.push(growthPerventage);
+        }
+        const meanGrowthPerventage = SantiagoMath.calculateMean(salaryGrothPercentage);
+        const lastMeanSalary = listMeanYears[listMeanYears.length-1];
+        const increase = lastMeanSalary * meanGrowthPerventage ;
+        const newMeanSalary = increase + lastMeanSalary ;
+        console.log(newMeanSalary);
+    }
+}
