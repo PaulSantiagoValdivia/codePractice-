@@ -1,13 +1,33 @@
 const btn = document.querySelector('#calcular');
 const inputPrice = document.querySelector('#price');
-const result = document.querySelector('#result');
+const inputCoupon = document.querySelector('#coupon');
+
+const pResult = document.querySelector('#result');
 let text;
+class coupon {
+    constructor(name, discount) {
+        this.name = name;
+        this.discount = discount;
+    }
+}
+
+const coupons = [];
+coupons.push(new coupon("D30", 30), new coupon("D20", 20), new coupon("D15", 15));
 
 btn.addEventListener('click', () => {
-    //(p*(100-d)) / 100
-    const price = inputPrice.value;
-    const discount = 10;
-    const newPrice = (price * (100 - discount)) / 100;
-    text = `El precio final es de: $ ${newPrice}`;
-    result.innerText =  text;
-});
+    const price = Number(inputPrice.value);
+    const discount = inputCoupon.value;
+    const couponValidate = coupons.find(item => item.name == discount);
+    if (!price) {
+        text = `Ingrese el precio para poder realizar el calculo gracias`;
+        pResult.innerText = text;    
+    }
+    else if (couponValidate != undefined) {
+        const newPrice = (price * (100 - couponValidate.discount)) / 100;
+        text = `El precio final es de: $ ${newPrice}`;
+        pResult.innerText = text;
+    } else {
+        text = `Ingrese un cupon valido`;
+        pResult.innerText = text;
+    }
+}); 
