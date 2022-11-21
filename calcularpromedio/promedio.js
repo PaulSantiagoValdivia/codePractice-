@@ -1,8 +1,9 @@
-const salary = [230, 300, 400, 1000, 500, 320];
+const salary = [230, 300, 400, 1000, 500, 320, 200, 200];
 const additionSalary = salary.reduce((accumulator, courrentValue) => accumulator + courrentValue);
 const average = additionSalary / salary.length;
 console.log(average);
-calculateMean(salary);  
+calculateMean(salary);
+calculateMode(salary);
 function calculateMean(salary) {
     const listSalary = salary.sort((accumulator, courrentValue) => accumulator - courrentValue);
     if (esPar(listSalary)) {
@@ -32,6 +33,22 @@ function esPar(listSalary) {
     return validate;
 };
 
+function calculateMode(salary) {
+    const listSalaryRepeated = {};
+    for (let i = 0; i < salary.length; i++) {
+        const element = salary[i];
+        if (listSalaryRepeated[element]) {
+            listSalaryRepeated[element] += 1;
+        } else {
+            listSalaryRepeated[element] = 1;
+        }
+    }
+    const copy = Object.entries(listSalaryRepeated);
+    const orderedCopy = copy.sort((accumulator, courrentValue) => accumulator[1] - courrentValue[1]);
+    const repeatingMaximumSalary = orderedCopy[copy.length-1];
+    console.log("el salario promedio es "  + repeatingMaximumSalary[0] ) ;
+
+}
 
 
 
