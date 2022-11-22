@@ -9,7 +9,8 @@ SantiagoMath.avergaeSalary = function avergaeSalary(salary) {
 
 SantiagoMath.calculateMean = function calculateMean(salary) {
     const listSalary = salary.sort((accumulator, courrentValue) => accumulator - courrentValue);
-    if (esPar(listSalary)) {
+    let esPar = listSalary.length % 2 == 0 ? true: false;
+    if (esPar) {
         const indexMeanPair1 = (listSalary.length / 2) - 1;
         const indexMeanPair2 = listSalary.length / 2;
         const result = (listSalary[indexMeanPair1] + listSalary[indexMeanPair2]) / 2;
@@ -36,14 +37,4 @@ SantiagoMath.calculateMode = function calculateMode(salary) {
     const repeatingMaximumSalary = orderedCopy[copy.length - 1];
     console.log("el salario promedio es " + repeatingMaximumSalary[0]);
 
-}
-
-function esPar(listSalary) {
-    let validate;
-    if (listSalary.length % 2 === 0) {
-        validate = true;
-    } else {
-        validate = false;
-    }
-    return validate;
 }
