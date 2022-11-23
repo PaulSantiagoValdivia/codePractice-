@@ -1,9 +1,14 @@
 const items = document.getElementById('items');
 const templateCard = document.getElementById('template-card').content;
 const fragment = document.createDocumentFragment();
+let shoppingCart ={}
+
 document.addEventListener('DOMContentLoaded', () => {
     fetchData()
 });
+items.addEventListener('click', e =>{
+    addTrolley(e);
+})
 const fetchData = async () => {
     try {
         const res = await fetch('api.json');
@@ -16,7 +21,7 @@ const fetchData = async () => {
 
 const pintarCards = data => {
       data.forEach(producto => {
-        console.log(data);
+
         templateCard.querySelector('h5').textContent = producto.title
         templateCard.querySelector('P').textContent = producto.precio
         templateCard.querySelector('img').setAttribute("src", producto.thumbnailUrl)
@@ -25,5 +30,25 @@ const pintarCards = data => {
         const clone = templateCard.cloneNode(true)
         fragment.appendChild(clone)
     })
+
     items.appendChild(fragment)
+
+}
+const addTrolley = e => {
+
+    e.target.classList.contains('btn-dark') ? setShoppingCart(e.target.parentElement): false;
+    e.stopPropagation()
+
+}
+const setShoppingCart = objeto => {
+    const product = {
+        id: objeto.querySelector('.btn-dark').dataset.id,
+        title: objeto.querySelector('h5').textContent,
+        precio: objeto.querySelector('p').textContent,
+        cantidad : 1
+        
+    }
+    shoppingCart.hasOwnProperty(product.id)? product.cantidad = shoppingCart[product.id].cantidad + 1 : false;
+    shoppingCart[product.id] = {...product};
+    console.log(shoppingCart);
 }
