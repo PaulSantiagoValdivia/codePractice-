@@ -11,7 +11,7 @@ let shoppingCart = {};
 document.addEventListener('DOMContentLoaded', () => {
 
     fetchData();
-    if(localStorage.getItem('shoppingCart')){
+    if (localStorage.getItem('shoppingCart')) {
         shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
         paintTrolley();
     }
@@ -111,8 +111,25 @@ const paintFooter = () => {
     footer.appendChild(fragment);
     const btnEmpty = document.getElementById('vaciar-carrito');
     btnEmpty.addEventListener('click', () => {
-        shoppingCart = {};
-        paintTrolley();
+        Swal.fire({
+            title: 'Estas seguro?',
+            text: "No podra revertir esto !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, borralo!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Eliminado!',
+                    'Su carrito de compras esta vacio.',
+                    'success'
+                )
+                shoppingCart = {};
+                paintTrolley();
+            }
+        })
     })
 }
 
@@ -127,8 +144,8 @@ const btnAction = e => {
     if (e.target.classList.contains('btn-danger')) {
         const product = shoppingCart[e.target.dataset.id];
         product.cantidad--;
-        
-        product.cantidad === 0? delete shoppingCart[e.target.dataset.id]:false;  
+
+        product.cantidad === 0 ? delete shoppingCart[e.target.dataset.id] : false;
         paintTrolley()
     }
     e.stopPropagation()
