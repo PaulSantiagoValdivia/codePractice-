@@ -11,7 +11,10 @@ let shoppingCart = {};
 document.addEventListener('DOMContentLoaded', () => {
 
     fetchData();
-
+    if(localStorage.getItem('shoppingCart')){
+        shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
+        paintTrolley();
+    }
 });
 
 cards.addEventListener('click', e => {
@@ -85,6 +88,9 @@ const paintTrolley = () => {
     });
     items.appendChild(fragment);
     paintFooter();
+
+    localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart))
+
 }
 
 const paintFooter = () => {
