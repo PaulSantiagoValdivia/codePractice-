@@ -56,7 +56,6 @@ const setShoppingCart = objeto => {
         title: objeto.querySelector('h5').textContent,
         precio: objeto.querySelector('p').textContent,
         cantidad: 1
-
     }
 
     shoppingCart.hasOwnProperty(product.id) ? product.cantidad = shoppingCart[product.id].cantidad + 1 : false;
@@ -86,16 +85,23 @@ const paintTrolley = () => {
 const paintFooter = () => {
 
     footer.innerHTML = '';
-    Object.keys(shoppingCart).length === 0 ? footer.innerHTML = `<th scope="row" colspan="5">Carrito vacio - comience a Comprar</th>` : false;
-
+    if(Object.keys(shoppingCart).length === 0){
+        
+        footer.innerHTML = `<th scope="row" colspan="5">Carrito vacio - comience a Comprar</th>`
+        return
+    }
     const nAmount = Object.values(shoppingCart).reduce((acc, { cantidad }) => acc + cantidad, 0);
+
     const nPrice = Object.values(shoppingCart).reduce((acc, { cantidad, precio }) => acc + cantidad * precio, 0);
     templateFooter.querySelectorAll('td')[0].textContent = nAmount;
     templateFooter.querySelector('span').textContent = nPrice;
-
     const clone = templateFooter.cloneNode(true);
-
     fragment.appendChild(clone);
     footer.appendChild(fragment);
+    const btnEmpty = document.getElementById('vaciar-carrito');
+    btnEmpty.addEventListener('click', () =>{
+        shoppingCart = {};
+        paintTrolley();
+    })
 }
 
