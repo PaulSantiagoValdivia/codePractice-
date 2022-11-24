@@ -17,6 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
 cards.addEventListener('click', e => {
     addTrolley(e);
 })
+
+items.addEventListener('click', e => {
+    btnAction(e);
+})
+
 const fetchData = async () => {
     try {
         const res = await fetch('api.json');
@@ -85,8 +90,8 @@ const paintTrolley = () => {
 const paintFooter = () => {
 
     footer.innerHTML = '';
-    if(Object.keys(shoppingCart).length === 0){
-        
+    if (Object.keys(shoppingCart).length === 0) {
+
         footer.innerHTML = `<th scope="row" colspan="5">Carrito vacio - comience a Comprar</th>`
         return
     }
@@ -99,9 +104,26 @@ const paintFooter = () => {
     fragment.appendChild(clone);
     footer.appendChild(fragment);
     const btnEmpty = document.getElementById('vaciar-carrito');
-    btnEmpty.addEventListener('click', () =>{
+    btnEmpty.addEventListener('click', () => {
         shoppingCart = {};
         paintTrolley();
     })
 }
 
+const btnAction = e => {
+    if (e.target.classList.contains('btn-info')) {
+        const product = shoppingCart[e.target.dataset.id];
+        product.cantidad++;
+        shoppingCart[e.target.dataset.id] = { ...product };
+        paintTrolley();
+    }
+
+    if (e.target.classList.contains('btn-danger')) {
+        const product = shoppingCart[e.target.dataset.id];
+        product.cantidad--;
+        
+        product.cantidad === 0? delete shoppingCart[e.target.dataset.id]:false;  
+        paintTrolley()
+    }
+    e.stopPropagation()
+};
