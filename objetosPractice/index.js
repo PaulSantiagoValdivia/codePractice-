@@ -18,3 +18,28 @@ const juanita = new Studen(
     ]
 )
 
+class Studen2 {
+    constructor({
+        name = "",
+        approvedCourses = [],
+        years = 0,
+        email = ""
+    }) {
+        this.name = name;
+        this.years = years;
+        this.approvedCourses = approvedCourses;
+        this.email = email;
+    }
+
+    passCourse(newCourses) {
+        this.approvedCourses.push(newCourses);
+    }
+}
+
+const mike = new Studen2({
+    years: 17,
+    name: "Miguel",
+    email: "miguel@platzi.com"
+}
+
+);
