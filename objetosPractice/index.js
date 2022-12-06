@@ -1,3 +1,31 @@
+function videoPlay(id){
+    const urlSecreta = "https://platzijava" + id;
+    console.log("se reproduce " + urlSecreta);
+}
+function pausarVideo(id){
+    const urlSecreta = "https://platzijava" + id;
+    console.log("se pauso " + urlSecreta);
+
+}
+
+export class PlatziClass {
+    constructor({
+        name,
+        videoID
+    }) {
+        this.name = name;
+        this.videoID = videoID;
+    }
+    reproducir() {
+        videoPlay(this.videoID);
+    }
+    pausar() {
+        pausarVideo(this.videoID);
+    }
+}
+
+
+
 import Course from './js/courses.js';
 import LearningPath from './js/learningpath.js';
 import Teachers from './js/teachers.js';
@@ -48,7 +76,5 @@ const santiago = new Studen({
     instagram: "santiagodc",
     learningPath : [reactNativeLearningPath]
 });
-console.log(basicProgrammingCourse);
-basicProgrammingCourse.name = "curso malito de programacion basica";
-console.log(basicProgrammingCourse);
-console.log(basicProgrammingCourse);
+console.log(mike);
+console.log(santiago)   ;

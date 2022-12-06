@@ -21,7 +21,46 @@ export default class Studen {
         this.learningPath = learningPath;
     }
 
+
+}
+
+class FreeStudent extends Studen {
+    constructor(props) {
+        super(props);
+    }
     passCourse(newCourses) {
-        this.approvedCourses.push(newCourses);
+
+        if (newCourses.IsFree) {
+            this.approvedCourses.push(newCourses);
+        }
+        else {
+            console.warn("lo sentimos " + this.name + ", solo puedes tomar cursos abiertos");
+        }
+    }
+}
+
+class BasicStudent extends Studen {
+    constructor(props) {
+        super(props);
+    }
+
+    passCourse(newCourses) {
+
+        if (newCourses.lang !== "english") {
+            this.approvedCourses.push(newCourses);
+        }
+        else {
+            console.warn("lo sentimos " + this.name + ", solo puedes tomar cursos en ingles");
+        }
+    }
+}
+
+class ExpertStudent extends Studen {
+    constructor(props) {
+        super(props);
+    }
+    passCourse(newCourses) {
+
+        this.approvedCourses.push(newCourses)
     }
 }
