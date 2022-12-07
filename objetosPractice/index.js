@@ -1,3 +1,23 @@
+class Coment {
+    constructor({
+        content,
+        studentName,
+        studentRole = 'Estudiante',
+    }) {
+        this.content = content;
+        this.studentName = studentName;
+        this.studentRole = studentRole;
+        this.likes = 0;
+    }
+    publicar() {
+        console.log(this.studentName + " (" + this.studentRole + ")");
+        console.log(this.likes + " LIKES");
+        console.log(this.content);
+    }
+
+}
+
+
 class Course {
     constructor({
         id,
@@ -70,8 +90,13 @@ class Studen {
         this.approvedCourses = approvedCourses;
         this.learningPath = learningPath;
     }
-
-
+    publicarComentario(commentContent) {
+        const comment = new Coment({
+            content: commentContent,
+            studentName: this.name
+        });
+        comment.publicar();
+    }
 }
 
 class FreeStudent extends Studen {
@@ -114,6 +139,25 @@ class ExpertStudent extends Studen {
         this.approvedCourses.push(newCourses)
     }
 }
+
+class TeacherStudent extends Studen {
+    constructor(props) {
+        super(props);
+    }
+    passCourse(newCourses) {
+
+        this.approvedCourses.push(newCourses)
+    }
+    publicarComentario(commentContent) {
+        const comment = new Coment({
+            content: commentContent,
+            studentName: this.name,
+            studentRole: "Profesor"
+        });
+        comment.publicar();
+    }
+
+}
 class Teachers {
     constructor({
         name,
@@ -130,19 +174,18 @@ class Teachers {
     }
 }
 
-const diegoDeGranda = new Teachers({
+const diegoDeGranda = new TeacherStudent({
     name: "Diego de granda",
     username: "DiegoDg",
     email: "diegodg@platzi.com",
     yearsOfIntruction: 6,
-    coourses: []
-})
+});
 const cursoJavaScript = new Course({
     id: 'basico-javascript',
     name: 'Curso Básico de JavaScript',
     teacher: diegoDeGranda,
     isFree: true,
-})
+});
 const basicProgrammingCourse = new Course({
     name: 'curso gratis de programacion basica',
     lang: "english",
