@@ -23,7 +23,7 @@ Object.isSealed(juan); */
     configurable: false,
 
 }); */
-function requireParam (param){
+function requireParam(param) {
     throw new Error(param + " es obligatorio")
 }
 
@@ -37,9 +37,11 @@ function createStudent({
     approvedCourses = [],
     lerningPaths = [],
 }
-={}) {
-    return {
-        name,
+    = {}) {
+    const private = {
+        "_name": name,
+    }
+    const public = {
         age,
         email,
         approvedCourses,
@@ -48,9 +50,23 @@ function createStudent({
             twitter,
             instagram,
             facebook,
-        }
-
-    }
+        },
+        readName() {
+            return private['_name'];
+        },
+        changeName(newName) {
+            private['_name'] = newName;
+        },
+    };
+Object.defineProperty(public, "readName",{
+    writable: false,
+    configurable: false,
+});
+Object.defineProperty(public, "changeName",{
+    writable: false,
+    configurable: false,
+});
+    return public;
 }
 const juan = createStudent({
     name: 'juanito',
