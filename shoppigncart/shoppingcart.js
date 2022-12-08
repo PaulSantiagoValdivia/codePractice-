@@ -9,7 +9,6 @@ const fragment = document.createDocumentFragment();
 let shoppingCart = {};
 
 document.addEventListener('DOMContentLoaded', () => {
-
     fetchData();
     if (localStorage.getItem('shoppingCart')) {
         shoppingCart = JSON.parse(localStorage.getItem('shoppingCart'));
