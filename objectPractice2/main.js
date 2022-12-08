@@ -1,4 +1,4 @@
-const studenBase = {
+/* const studenBase = {
     name: undefined,
     email: undefined,
     age: undefined,
@@ -9,20 +9,56 @@ const studenBase = {
         instagram: undefined,
         facebook: undefined,
     }
-}
+} */
 // esto evita que puedan eliminar nuestras propiedades
-const juan = deepCopy(studenBase);
+/* onst juan = deepCopy(studenBase);
 Object.seal(juan);
 
-juan.name='juanito';
+juan.name = 'juanito';
 
-Object.isSealed(juan);
+Object.isSealed(juan); */
 
 /* Object.defineProperty(juan, "name", {
     value: "juanito",
     configurable: false,
 
 }); */
+function requireParam (param){
+    throw new Error(param + " es obligatorio")
+}
+
+function createStudent({
+    name = requireParam("name"),
+    email = requireParam("email"),
+    age,
+    twitter,
+    instagram,
+    facebook,
+    approvedCourses = [],
+    lerningPaths = [],
+}
+={}) {
+    return {
+        name,
+        age,
+        email,
+        approvedCourses,
+        lerningPaths,
+        socialMedia: {
+            twitter,
+            instagram,
+            facebook,
+        }
+
+    }
+}
+const juan = createStudent({
+    name: 'juanito',
+    age: 18,
+    email: 'juanito@platzi.com',
+    twitter: "fjuandc",
+}
+);
 
 function isObject(subject) {
     return typeof subject == "object"
