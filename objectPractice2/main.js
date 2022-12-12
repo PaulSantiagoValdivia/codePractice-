@@ -1,30 +1,36 @@
-/* const studenBase = {
-    name: undefined,
-    email: undefined,
-    age: undefined,
-    approvedCourses: undefined,
-    lerningPaths: undefined,
-    socialMedia: {
-        twitter: undefined,
-        instagram: undefined,
-        facebook: undefined,
-    }
-} */
-// esto evita que puedan eliminar nuestras propiedades
-/* onst juan = deepCopy(studenBase);
-Object.seal(juan);
 
-juan.name = 'juanito';
-
-Object.isSealed(juan); */
-
-/* Object.defineProperty(juan, "name", {
-    value: "juanito",
-    configurable: false,
-
-}); */
 function requireParam(param) {
     throw new Error(param + " es obligatorio")
+}
+
+function createLerningPaths({
+    name = requireParam("name"),
+    courses = [],
+}) {
+    const private = {
+        "_name": name,
+        "_courses": courses,
+
+    };
+
+    const public = {
+        get name() {
+            return private['_name'];
+        },
+        set name(newName) {
+            if (newName.length !== 0) {
+                return private['_name'] = newName;
+            } else {
+                console.warn("tu nombre debe tener al menos un caracter");
+            }
+        },
+        get courses() {
+            return private['_courses'];
+        },
+
+    };
+
+    return public;
 }
 
 function createStudent({
@@ -40,32 +46,41 @@ function createStudent({
     = {}) {
     const private = {
         "_name": name,
+        "_lerningPaths": lerningPaths,
     }
     const public = {
         age,
         email,
         approvedCourses,
-        lerningPaths,
         socialMedia: {
             twitter,
             instagram,
             facebook,
         },
-        readName() {
-            return private['_name'];
+
+        get lerningPaths() {
+            return private['_lerningPaths'];
         },
-        changeName(newName) {
-            private['_name'] = newName;
+        set lerningPaths(newLP) {
+            if (!newLP.name) {
+                console.warn("tu lp no tiene la propiedad nombre");
+                return;
+            }
+            if (!newLP.courses) {
+                console.warn("tu lp no tiene courses");
+                return;
+            }
+            if (!isArray(!newLP.courses)) {
+                console.warn("tu lp no tiene lista de cursos ");
+                return;
+            }
+
+            private["_lerningPaths"] = newLP;
+
         },
+
     };
-Object.defineProperty(public, "readName",{
-    writable: false,
-    configurable: false,
-});
-Object.defineProperty(public, "changeName",{
-    writable: false,
-    configurable: false,
-});
+
     return public;
 }
 const juan = createStudent({
