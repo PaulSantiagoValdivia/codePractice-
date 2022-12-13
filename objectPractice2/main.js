@@ -3,17 +3,24 @@ function requireParam(param) {
     throw new Error(param + " es obligatorio")
 }
 
-function createLerningPaths({
+function LearningPath({
     name = requireParam("name"),
     courses = [],
+
 }) {
-    const private = {
-        "_name": name,
-        "_courses": courses,
+    this.name = name;
+    this.courses = courses
 
-    };
+    /* 
+        const private = {
+            "_name": name,
+            "_courses": courses,
+    
+        }; */
 
-    const public = {
+
+
+    /* const public = {
         get name() {
             return private['_name'];
         },
@@ -31,9 +38,10 @@ function createLerningPaths({
     };
 
     return public;
+ */
 }
 
-function createStudent({
+function Student({
     name = requireParam("name"),
     email = requireParam("email"),
     age,
@@ -41,13 +49,34 @@ function createStudent({
     instagram,
     facebook,
     approvedCourses = [],
-    lerningPaths = [],
-}
-    = {}) {
-    const private = {
+    learningPaths = [],
+} = {}) {
+    this.name = name;
+    this.email = email;
+    this.age = age;
+    this.approvedCourses = approvedCourses
+    this.socialMedia = {
+        twitter,
+        instagram,
+        facebook,
+    };
+
+    if (isArray(learningPaths)) {
+        this.learningPaths = [];
+        for (learningPathIndex in learningPaths) {
+            if (learningPaths[learningPathIndex] instanceof LearningPath) {
+                this.learningPaths.push(learningPaths[learningPathIndex]);
+            };
+        };
+    }
+
+
+
+    /*     const private = {
         "_name": name,
         "_lerningPaths": lerningPaths,
-    }
+    };
+
     const public = {
         age,
         email,
@@ -70,27 +99,32 @@ function createStudent({
                 console.warn("tu lp no tiene courses");
                 return;
             }
-            if (!isArray(!newLP.courses)) {
-                console.warn("tu lp no tiene lista de cursos ");
+            if (!isArray(newLP.courses)) {
+                console.warn("tu lp no tiene lista de (*cursos) ");
                 return;
             }
 
-            private["_lerningPaths"] = newLP;
+            private["_lerningPaths"].push(newLP);
 
         },
 
     };
 
     return public;
+ */
 }
-const juan = createStudent({
-    name: 'juanito',
-    age: 18,
-    email: 'juanito@platzi.com',
-    twitter: "fjuandc",
-}
-);
-
+const escuelaWeb = new LearningPath({ name: "escuela webDev" });
+const escuelaData = new LearningPath({ name: "escuela de Data Scinence" });
+const juan = new Student({
+    email: "juanito@frijoles.co",
+    name: "Juanito",
+    learningPaths: [
+        escuelaWeb,
+        escuelaData,
+        {name: 'purooo',
+        courses: "trolo"}
+    ],
+});
 function isObject(subject) {
     return typeof subject == "object"
 }
