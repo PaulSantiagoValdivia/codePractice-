@@ -60,15 +60,28 @@ function Student({
         instagram,
         facebook,
     };
+    private = {
+        "_learningPaths": []
+    }
+    Object.defineProperty(Student.prototype, "learningPaths", {
+        get() {
+            return private["_learningPaths"]
+        },
+        set(newLP) {
+            if (newLP instanceof LearningPath) {
+                private["_learningPaths"].push(newLP);
+            } else {
+                console.warn("Alguno de los learning paths no es instancia del prototipo learning paths");
+            }
+        }
+    });
 
     if (isArray(learningPaths)) {
-        this.learningPaths = [];
+        this._learningPaths = [];
         for (learningPathIndex in learningPaths) {
-            if (learningPaths[learningPathIndex] instanceof LearningPath) {
-                this.learningPaths.push(learningPaths[learningPathIndex]);
-            };
+            this.learningPaths = learningPaths[learningPathIndex];
         };
-    }
+    };
 
 
 
@@ -113,6 +126,8 @@ function Student({
     return public;
  */
 }
+
+Student.prototype.learningPaths
 const escuelaWeb = new LearningPath({ name: "escuela webDev" });
 const escuelaData = new LearningPath({ name: "escuela de Data Scinence" });
 const juan = new Student({
@@ -121,8 +136,6 @@ const juan = new Student({
     learningPaths: [
         escuelaWeb,
         escuelaData,
-        {name: 'purooo',
-        courses: "trolo"}
     ],
 });
 function isObject(subject) {
