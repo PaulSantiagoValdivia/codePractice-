@@ -13,3 +13,5 @@ function showNextCard() {
 
 // Show the next card every 3 seconds
 setInterval(showNextCard, 3000);
+let const .mp
+``
